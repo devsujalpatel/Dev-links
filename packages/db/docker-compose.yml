@@ -1,0 +1,23 @@
+name: devlinks
+
+services:
+  postgres:
+    image: postgres
+    container_name: devlinks-postgres
+    environment:
+      POSTGRES_DB: devlinks
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - devlinks_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  devlinks_postgres_data:
